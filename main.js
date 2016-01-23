@@ -6,7 +6,11 @@ var t, debug = true;
 var selectors = [
 	"iframe[src*=2mdm]",
 	"iframe[id*=google_ads_iframe_]",
-	"div.ego_unit"
+	"div.ego_unit",
+	"div._38vo",
+	"a.profilePicThumb",
+	"iframe#ad_main",
+	"iframe#ad_sponsorship"
 ];
 
 
@@ -157,21 +161,13 @@ function getInstagram() {
 	});
 }
 
-var _sizes = [15,30,31,33,60,90,125,133,150,210,218,222,240,250,280,300,336,350,400,468,480,600,728];
-function findAds() {
-	clearTimeout(t);
-
-	// src: iframe[src*=2mdm]
-	// id: iframe#google_ads_iframe_
-	// class: div.ego_unit
-
-
+function replaceAdSpace() {
 	$(selectors.join(',')).each(function(index,value){
 		var _h = $(this).height();
 		var _w = $(this).width();
-		if($(this).css("display") !== "none" && _w > 15){
+		if($(this).css("display") !== "none" && _w > 35 && _h > 35){
 			var style = $(this).getStyleObject();
-			var el_i_w = $("<div/>").addClass("cpa_custom_img_wrapper");
+			var el_i_w = $("<div/>").addClass("cpa_custom_img_wrapper").addClass('pulse2');
 
 			var el = $("<div/>").css({
 				width: $(this).width(),
@@ -184,30 +180,38 @@ function findAds() {
 				display: "none"
 			});
 			el.append(el_i_w).addClass("cpa_custom_wrapper");
-
 			$(this).replaceWith(el);
 			el.fadeIn('slow');
 		}
 	});
+}
 
+function findAds() {
+	clearTimeout(t);
 	if( images_loaded ) {
 		$(".cpa_custom_wrapper").each(function(index,value){
 			if( !$(this).hasClass("loaded") ) {
-				var images = stalkabase.getImages(10);
-				var keys = shuffle(Object.keys(images));
+				var that = this;
+				$(this).find('.cpa_custom_img_wrapper')[0].addEventListener("webkitAnimationIteration", function() {
+					var images = stalkabase.getImages(10);
+					var keys = shuffle(Object.keys(images));
 
-				var wrapperWidth = $(this).width();
-				var wrapperHeight = $(this).height();
-				var diff = Math.abs(wrapperWidth-wrapperHeight);
-				if( diff < 100 ) {
-					var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
-					basicAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
-				} else {
-					var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
-					bannerAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
-				}
+					var wrapperWidth = $(that).width();
+					var wrapperHeight = $(that).height();
+					var diff = Math.abs(wrapperWidth-wrapperHeight);
+					if( diff < 100 ) {
+						var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
+						basicAds[adIndex].bind(that)(wrapperWidth, wrapperHeight, images, keys);
+					} else {
+						var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
+						bannerAds[adIndex].bind(that)(wrapperWidth, wrapperHeight, images, keys);
+					}
+					$(that).find('.cpa_custom_img_wrapper').removeClass("pulse2");
+					$(that).addClass("loaded");
 
-				$(this).addClass("loaded");
+				}, false);
+
+
 			}
 		});
 	}
@@ -292,10 +296,10 @@ var bannerAds = [
 ];
 
 $(window).load(function(){
-	//$(selectors.join(',')).css('opacity', '0');
+	replaceAdSpace();
 	t = setTimeout(function(){
 		findAds();
-	}, 1000);
+	}, 2000);
 
     chrome.storage.local.get('cpa_stalkee', function (result) {
         if( result && result.cpa_stalkee ) {
