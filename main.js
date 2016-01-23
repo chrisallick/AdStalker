@@ -220,6 +220,7 @@ function findAds() {
 
 var basicAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
+		var el_wrapperTarget = $(".cpa_custom_img_wrapper", this);
 		var captionPositions = ['cpa_caption_top', 'cpa_caption_middle', 'cpa_caption_bottom',];
 		var captionPosition = captionPositions[Math.round(Math.random() * captionPositions.length-1)];
 		var wideBanner = wrapperWidth > wrapperHeight;
@@ -233,7 +234,7 @@ var basicAds = [
 			width: imageWidth
 		});
 
-		$(".cpa_custom_img_wrapper", this).append(el_image);
+		el_wrapperTarget.append(el_image);
 
 		if(captionText){
 			var el_caption = $("<div/>")
@@ -256,6 +257,7 @@ var basicAds = [
 ];
 var bannerAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
+		var el_wrapperTarget = $(".cpa_custom_img_wrapper", this);
 		var shortSide = Math.min(wrapperHeight, wrapperWidth);
 		var longSide = Math.max(wrapperHeight, wrapperWidth);
 		var index = 0;
@@ -287,11 +289,21 @@ var bannerAds = [
 				});
 			}
 
-			$(".cpa_custom_img_wrapper", this).append(el_image);
+			el_wrapperTarget.append(el_image);
 			index++;
 		}
+
+		var el_bannerVignette = $("<div/>").addClass("cpa_banner_vignette")
+		if(wideBanner){
+			el_bannerVignette.addClass("cpa_banner_landscape");
+		}else{
+			el_bannerVignette.addClass("cpa_banner_portait");
+		}
+
+		$(this).append(el_bannerVignette);
 	},
 	function(wrapperWidth, wrapperHeight, images, keys){
+		var el_wrapperTarget = $(".cpa_custom_img_wrapper", this);
 		var wideBanner = wrapperWidth > wrapperHeight;
 		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
 		var offset, blur, fontSize;
@@ -377,9 +389,9 @@ var bannerAds = [
 			el_caption_text.css({fontSize: fontSize});
 		}
 
-		$(".cpa_custom_img_wrapper", this).append(el_background);
-		$(".cpa_custom_img_wrapper", this).append(el_image);
-		$(".cpa_custom_img_wrapper", this).append(el_caption);
+		el_wrapperTarget.append(el_background);
+		el_wrapperTarget.append(el_image);
+		el_wrapperTarget.append(el_caption);
 	}
 ];
 
