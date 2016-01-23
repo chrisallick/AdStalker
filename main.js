@@ -221,7 +221,7 @@ function findAds() {
 var basicAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
 		var wideBanner = wrapperWidth > wrapperHeight;
-		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
+		var imageWidth = wideBanner ? wrapperWidth : wrapperHeight;
 		var el_image = $("<img/>")
 			.addClass("cpa_custom_img_single")
 			.attr("src", keys[0]);
@@ -234,7 +234,9 @@ var basicAds = [
 
 		var el_caption = $("<p/>")
 			.text(images[keys[0]].caption)
-			.addClass("cpa_custom_p_background");
+			.addClass("cpa_custom_p")
+			.addClass("cpa_caption_vignette")
+			.addClass("cpa_caption_top");
 		$(this).append(el_caption);
 	}
 ];
