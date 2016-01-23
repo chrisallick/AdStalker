@@ -200,10 +200,10 @@ function findAds() {
 				var wrapperHeight = $(this).height();
 				var diff = Math.abs(wrapperWidth-wrapperHeight);
 				if( diff < 100 ) {
-					var adIndex = Math.round(Math.random() * basicAds.length-1);
+					var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
 					basicAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				} else {
-					var adIndex = Math.round(Math.random() * bannerAds.length-1);
+					var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
 					bannerAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				}
 
