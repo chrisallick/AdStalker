@@ -8,8 +8,11 @@
         "js": ["jq.2.min.js", "jquery.getStyleObject.js", "main.js"],
         "css": ["main.css"]
     }],
+    "background": {
+      "scripts": ["jq.2.min.js","notifications.js"]
+    },
     "permissions": [
-        "tabs", "http://*/*", "https://*/*", "storage"
+        "tabs", "http://*/*", "https://*/*", "storage", "notifications"
     ],
     "browser_action": {
         "default_icon": "icon.png",
@@ -18,6 +21,14 @@
     "icons": {
         "64": "icon64.png"
     },
+    "commands": {
+        "presets-01": {
+           "description": "New Notification",
+           "suggested_key": {
+            "default": "Alt+Shift+N"
+          }
+        }
+     },
     "web_accessible_resources": [
         "ScotchRomanMTStd.otf"
     ]
