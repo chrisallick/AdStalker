@@ -1,0 +1,6 @@
+@font-face { font-family: "srmts"; src: url("chrome-extension://__MSG_@@extension_id__/ScotchRomanMTStd.otf"); }
+
+.cpa_custom_img_wrapper { width: 110%; height: 100%; }
+.cpa_custom_img { height: auto; float: left; display: block; }
+.cpa_custom_img_single { position: absolute; top: 0px; left: 0px; z-index: 100; width: auto; height: auto; float: left; display: block; }
+.cpa_custom_p { width: 100%; height: auto; font-family: "srmts"; font-size: 20px; color: #FFFFFF; position: absolute; top: 0px; left: 0px; z-index: 101; padding: 10px; box-sizing: border-box; background: rgba(0,0,0,.3); margin: 0; }

@@ -1,0 +1,24 @@
+{
+    "name": "Ad Stalker v0.1",
+    "description": "Casually creep while on the clock.",
+    "version": "0.1",
+    "manifest_version": 2,
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["jq.2.min.js", "jquery.getStyleObject.js", "main.js", "popup.js"],
+        "css": ["main.css"]
+    }],
+    "permissions": [
+        "tabs", "http://*/*", "https://*/*", "storage"
+    ],
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "64": "icon64.png"
+    },
+    "web_accessible_resources": [
+        "ScotchRomanMTStd.otf"
+    ]
+}
