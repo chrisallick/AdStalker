@@ -22,6 +22,13 @@ $(document).ready(function(){
         });
     });
 
+    $('#cpa_phone').submit(function(){
+      var phone = $('#cpa_phonenum').val();
+      chrome.storage.local.set({'cpa_phone': phone}, function (result) {
+
+      });
+    });
+
     chrome.storage.local.get(['cpa_stalkee_user_data','cpa_time','cpa_stalkee'], function (result) {
       if(result.cpa_stalkee && result.cpa_stalkee != ''){
         $('.add-stalker').hide();

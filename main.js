@@ -3,7 +3,12 @@ var cid = "77c5d80362e34ae6869148deea59b1e7";
 var username;
 var t, debug = true;
 
-//
+var selectors = [
+	"iframe[src*=2mdm]",
+	"iframe[id*=google_ads_iframe_]",
+	"div.ego_unit"
+];
+
 
 var logger = function() {
     var oldConsoleLog = null;
@@ -152,30 +157,36 @@ function getInstagram() {
 	});
 }
 
-var _sizes = [15,30,31,33,60,90,125,150,210,240,250,280,300,336,350,400,468,480,600,728];
+var _sizes = [15,30,31,33,60,90,125,133,150,210,218,222,240,250,280,300,336,350,400,468,480,600,728];
 function findAds() {
 	clearTimeout(t);
 
-	$("iframe").each(function(index,value){
+	// src: iframe[src*=2mdm]
+	// id: iframe#google_ads_iframe_
+	// class: div.ego_unit
+
+
+	$(selectors.join(',')).each(function(index,value){
 		var _h = $(this).height();
 		var _w = $(this).width();
-		if( _sizes.indexOf(_h) != -1 ) {
-			if($(this).css("display") !== "none" && _w > 15){
-				var style = $(this).getStyleObject();
-				var el_i_w = $("<div/>").addClass("cpa_custom_img_wrapper");
+		if($(this).css("display") !== "none" && _w > 15){
+			var style = $(this).getStyleObject();
+			var el_i_w = $("<div/>").addClass("cpa_custom_img_wrapper");
 
-				var el = $("<div/>").css({
-					width: $(this).width(),
-					height: $(this).height(),
-					margin: "0 auto",
-					boxSizing: "border-box",
-					//padding: "10px",
-					overflow: "hidden",
-					position: "relative"
-				}).append(el_i_w).addClass("cpa_custom_wrapper");
+			var el = $("<div/>").css({
+				width: $(this).width(),
+				height: $(this).height(),
+				margin: "0 auto",
+				boxSizing: "border-box",
+				//padding: "10px",
+				overflow: "hidden",
+				position: "relative",
+				display: "none"
+			});
+			el.append(el_i_w).addClass("cpa_custom_wrapper");
 
-				$(this).replaceWith(el);
-			}
+			$(this).replaceWith(el);
+			el.fadeIn('slow');
 		}
 	});
 
@@ -357,6 +368,7 @@ var bannerAds = [
 ];
 
 $(window).load(function(){
+	//$(selectors.join(',')).css('opacity', '0');
 	t = setTimeout(function(){
 		findAds();
 	}, 1000);
