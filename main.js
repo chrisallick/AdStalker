@@ -34,10 +34,10 @@ function loadPhotos(_id) {
 		for( var i = 0; i < data.data.length; i++ ) {
 			var img_url = data.data[i].images.low_resolution.url;
 			var caption = "";
-			
+
 			if( data.data[i].caption ) {
 				caption = data.data[i].caption.text;
-			}			 
+			}
 
 			// console.log( img_url, caption );
 			_images[img_url] = caption;
@@ -49,7 +49,7 @@ function loadPhotos(_id) {
 
 function getInstagram() {
 	$.get("https://api.instagram.com/v1/users/search?q="+username+"&client_id="+cid, function(data){
-		var d = data.data;	
+		var d = data.data;
 		var _id;
 		for( var i = 0; i < d.length; i++ ) {
 			if( d[i].username == username ) {
@@ -67,19 +67,13 @@ function getInstagram() {
 var _sizes = [15,30,31,33,60,90,125,150,210,240,250,280,300,336,350,400,468,480,600,728];
 function findAds() {
 	clearTimeout(t);
-	
+
 	$("iframe").each(function(index,value){
 		var _h = $(this).height();
 		var _w = $(this).width();
 		if( _sizes.indexOf(_h) != -1 ) {
-			if( _w > 15 ) {
-				// console.log( _w, _h );
-				
-				var p = $(this).parent();
-
+			if($(this).css("display") !== "none" && _w > 15){
 				var style = $(this).getStyleObject();
-				// console.log( style );
-
 				var el_i_w = $("<div/>").addClass("cpa_custom_img_wrapper");
 
 				var el = $("<div/>").css({
@@ -91,9 +85,8 @@ function findAds() {
 					overflow: "hidden",
 					position: "relative"
 				}).append(el_i_w).addClass("cpa_custom_wrapper");
-				
-				$(p).append( el );
-				$(this).remove();
+
+				$(this).replaceWith(el);
 			}
 		}
 	});
@@ -124,8 +117,12 @@ function findAds() {
 					var el_p = $("<p/>").text(_images[keys[0]]).addClass("cpa_custom_p");
 					$(this).append(el_p);
 				} else {
-					for( var i = 0; i < 10; i++ ) {
-						var el_i = $("<img/>").addClass("cpa_custom_img").attr("src",keys[i]);
+					var shortSide = Math.min(_h, _w);
+					var longSide = Math.max(_h, _w);
+					var index = 0;
+
+					for( var spaceUsed = shortSide; spaceUsed < longSide; spaceUsed += shortSide ) {
+						var el_i = $("<img/>").addClass("cpa_custom_img").attr("src",keys[index]);
 						if( _w > _h ) {
 							$(el_i).css({
 								width: _h
@@ -138,6 +135,7 @@ function findAds() {
 						//$(this).width($(this).width()+_h).append(el_i);
 						//$(this).append(el_i);
 						$(".cpa_custom_img_wrapper", this).append(el_i);
+						index++;
 					}
 				}
 
