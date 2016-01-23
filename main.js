@@ -220,8 +220,11 @@ function findAds() {
 
 var basicAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
+		var captionPositions = ['cpa_caption_top', 'cpa_caption_middle', 'cpa_caption_bottom',];
+		var captionPosition = captionPositions[Math.round(Math.random() * captionPositions.length-1)];
 		var wideBanner = wrapperWidth > wrapperHeight;
 		var imageWidth = wideBanner ? wrapperWidth : wrapperHeight;
+		var captionText = images[keys[0]].caption;
 		var el_image = $("<img/>")
 			.addClass("cpa_custom_img_single")
 			.attr("src", keys[0]);
@@ -232,12 +235,23 @@ var basicAds = [
 
 		$(".cpa_custom_img_wrapper", this).append(el_image);
 
-		var el_caption = $("<p/>")
-			.text(images[keys[0]].caption)
-			.addClass("cpa_custom_p")
-			.addClass("cpa_caption_vignette")
-			.addClass("cpa_caption_top");
-		$(this).append(el_caption);
+		if(captionText){
+			var el_caption = $("<div/>")
+				.addClass("cpa_custom_p")
+				.css({
+					position: 'absolute',
+					display: 'table',
+					height: "100%",
+					padding: 0
+				});
+			var el_caption_text = $("<span/>")
+				.text(captionText)
+				.addClass("cpa_caption_vignette")
+				.addClass(captionPosition)
+				.css({padding: 10});
+			el_caption.append(el_caption_text);
+			$(this).append(el_caption);
+		}
 	}
 ];
 var bannerAds = [
