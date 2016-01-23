@@ -9,6 +9,7 @@ var selectors = [
 	"div.ego_unit"
 ];
 
+
 var logger = function() {
     var oldConsoleLog = null;
     var pub = {};
@@ -110,7 +111,7 @@ var stalkabase = function() {
 				}
 			}
 
-			_images_loaded = true;
+			images_loaded = true;
 		});
 	}
 	function init(_id, callback) {
@@ -134,8 +135,8 @@ if( !debug ) {
 	logger.disableLogger();
 }
 
-var _images = {};
-var _images_loaded = false;
+var images = {};
+var images_loaded = false;
 
 
 function getInstagram() {
@@ -189,53 +190,21 @@ function findAds() {
 		}
 	});
 
-	if( _images_loaded ) {
+	if( images_loaded ) {
 		$(".cpa_custom_wrapper").each(function(index,value){
 			if( !$(this).hasClass("loaded") ) {
-				var _images = stalkabase.getImages(10);
-				var keys = shuffle(Object.keys(_images));
+				var images = stalkabase.getImages(10);
+				var keys = shuffle(Object.keys(images));
 
-				var _w = $(this).width();
-				var _h = $(this).height();
-				var diff = Math.abs(_w-_h);
+				var wrapperWidth = $(this).width();
+				var wrapperHeight = $(this).height();
+				var diff = Math.abs(wrapperWidth-wrapperHeight);
 				if( diff < 100 ) {
-					var el_i = $("<img/>").addClass("cpa_custom_img_single").attr("src",keys[0]);
-
-					if( _w > _h ) {
-						$(el_i).css({
-							width: _w
-						});
-					} else {
-						$(el_i).css({
-							width: _h
-						});
-					}
-
-					$(".cpa_custom_img_wrapper", this).append(el_i);
-
-					var el_p = $("<p/>").text(_images[keys[0]].caption).addClass("cpa_custom_p");
-					$(this).append(el_p);
+					var adIndex = Math.round(Math.random() * basicAds.length-1);
+					basicAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				} else {
-					var shortSide = Math.min(_h, _w);
-					var longSide = Math.max(_h, _w);
-					var index = 0;
-
-					for( var spaceUsed = shortSide; spaceUsed < longSide; spaceUsed += shortSide ) {
-						var el_i = $("<img/>").addClass("cpa_custom_img").attr("src",keys[index]);
-						if( _w > _h ) {
-							$(el_i).css({
-								width: _h
-							});
-						} else {
-							$(el_i).css({
-								width: _w
-							});
-						}
-						//$(this).width($(this).width()+_h).append(el_i);
-						//$(this).append(el_i);
-						$(".cpa_custom_img_wrapper", this).append(el_i);
-						index++;
-					}
+					var adIndex = Math.round(Math.random() * bannerAds.length-1);
+					bannerAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				}
 
 				$(this).addClass("loaded");
@@ -267,6 +236,60 @@ function shuffle(array) {
 
     return array;
 }
+
+var basicAds = [
+	function(wrapperWidth, wrapperHeight, images, keys){
+		var wideBanner = wrapperWidth > wrapperHeight;
+		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
+		var el_image = $("<img/>").addClass("cpa_custom_img_single").attr("src",keys[0]);
+
+		$(el_image).css({
+			width: imageWidth
+		});
+
+		$(".cpa_custom_img_wrapper", this).append(el_image);
+
+		var el_caption = $("<p/>").text(images[keys[0]].caption).addClass("cpa_custom_p");
+		$(this).append(el_caption);
+	}
+];
+var bannerAds = [
+	function(wrapperWidth, wrapperHeight, images, keys){
+		var shortSide = Math.min(wrapperHeight, wrapperWidth);
+		var longSide = Math.max(wrapperHeight, wrapperWidth);
+		var index = 0;
+		var offset = 0;
+		var wideBanner = wrapperWidth > wrapperHeight;
+		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
+
+		if(longSide % imageWidth !== 0){
+			var tileDiff = imageWidth - (longSide % imageWidth);
+			console.log(longSide, imageWidth, tileDiff);
+			offset = (tileDiff/2) * -1;
+		}
+
+		for(var spaceUsed = 0; spaceUsed < longSide; spaceUsed += shortSide) {
+			var el_image = $("<img/>").addClass("cpa_custom_img").attr("src",keys[index]);
+
+			if(wideBanner) {
+				$(el_image).css({
+					position: 'relative',
+					width: imageWidth,
+					left: offset
+				});
+			} else {
+				$(el_image).css({
+					position: 'relative',
+					width: imageWidth,
+					top: offset
+				});
+			}
+
+			$(".cpa_custom_img_wrapper", this).append(el_image);
+			index++;
+		}
+	}
+];
 
 $(window).load(function(){
 	//$(selectors.join(',')).css('opacity', '0');
