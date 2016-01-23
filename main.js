@@ -189,11 +189,12 @@ function findAds() {
 				var wrapperHeight = $(this).height();
 				var diff = Math.abs(wrapperWidth-wrapperHeight);
 				if( diff < 100 ) {
-					var adIndex = Math.round(Math.random() * basicAds.length-1);
+					var adIndex = Math.round(Math.random() * (basicAds.length-1));
 					basicAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				} else {
-					var adIndex = Math.round(Math.random() * bannerAds.length-1);
-					bannerAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
+					var adIndex = Math.round(Math.random() * (bannerAds.length-1));
+					// bannerAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
+					bannerAds[1].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				}
 
 				$(this).addClass("loaded");
@@ -230,7 +231,9 @@ var basicAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
 		var wideBanner = wrapperWidth > wrapperHeight;
 		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
-		var el_image = $("<img/>").addClass("cpa_custom_img_single").attr("src",keys[0]);
+		var el_image = $("<img/>")
+			.addClass("cpa_custom_img_single")
+			.attr("src", keys[0]);
 
 		$(el_image).css({
 			width: imageWidth
@@ -238,7 +241,9 @@ var basicAds = [
 
 		$(".cpa_custom_img_wrapper", this).append(el_image);
 
-		var el_caption = $("<p/>").text(images[keys[0]].caption).addClass("cpa_custom_p");
+		var el_caption = $("<p/>")
+			.text(images[keys[0]].caption)
+			.addClass("cpa_custom_p");
 		$(this).append(el_caption);
 	}
 ];
@@ -253,12 +258,13 @@ var bannerAds = [
 
 		if(longSide % imageWidth !== 0){
 			var tileDiff = imageWidth - (longSide % imageWidth);
-			console.log(longSide, imageWidth, tileDiff);
 			offset = (tileDiff/2) * -1;
 		}
 
 		for(var spaceUsed = 0; spaceUsed < longSide; spaceUsed += shortSide) {
-			var el_image = $("<img/>").addClass("cpa_custom_img").attr("src",keys[index]);
+			var el_image = $("<img/>")
+				.addClass("cpa_custom_img")
+				.attr("src", keys[index]);
 
 			if(wideBanner) {
 				$(el_image).css({
@@ -277,6 +283,36 @@ var bannerAds = [
 			$(".cpa_custom_img_wrapper", this).append(el_image);
 			index++;
 		}
+	},
+	function(wrapperWidth, wrapperHeight, images, keys){
+		var wideBanner = wrapperWidth > wrapperHeight;
+		var offset, blurSize;
+
+		if(wideBanner){
+			offset = (wrapperHeight - wrapperWidth) / 2;
+			blurSize = wrapperWidth / 20;
+		}else{
+			offset = (wrapperWidth - wrapperHeight) / 2;
+			blurSize = wrapperHeight / 20;
+		}
+
+		console.log(wrapperHeight, wrapperWidth, offset);
+		var el_background = $("<img/>")
+			.addClass("cpa_custom_img")
+			.attr("src", keys[0])
+			.css({
+				position: 'relative',
+				width: wideBanner ? (wrapperWidth*1.05) : (wrapperHeight*1.05),
+				WebkitFilter: 'blur(' + blurSize + 'px)'
+			});
+
+		if(wideBanner){
+			el_background.css({top: offset});
+		}else{
+			el_background.css({left: offset});
+		}
+
+		$(".cpa_custom_img_wrapper", this).append(el_background);
 	}
 ];
 
