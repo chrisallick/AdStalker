@@ -2,11 +2,12 @@
 <html>
     <head>
         <title>Ad Stalker</title>
-        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="material.css">
         <link rel="stylesheet" href="countup.css">
         <script src="jq.2.min.js"></script>
         <script src="material.min.js"></script>
         <script src="countup.js"></script>
+        <script src="moment.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <style>
           textarea:focus, input:focus{
@@ -37,17 +38,21 @@
             margin-left: 20px;
             width: 300px;
           }
+
+          .mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab{
+            color: #444444;
+            background-color: #FFF64F;
+          }
+          .img-circle {
+            border-radius: 50%;
+            width:50px;
+            height: 50px;
+          }
         </style>
 
         <script src="popup.js"></script>
     </head>
     <body>
-        <!-- <form id="cpa_stalkee">
-            <p>Who you stalking?</p>
-            <input id="cpa_text" type="text"></input>
-            <input id="cpa_submit" type="submit"></input>
-        </form> -->
-
         <div class="demo-card-wide mdl-card mdl-shadow--2dp">
           <div class="mdl-card__actions mdl-card--border add-stalker">
             <form action="#" id="cpa_stalkee">
@@ -63,7 +68,7 @@
 
           <div class="active-stalker">
             <div class="cpa_stalkee_user">
-              <img src="" />Currently Stalking <a href="http://instagram.com/">@<span id="cpa_stalkee_un"></span></a>
+              <img src="" class="img-circle" />Currently Stalking <a href="http://instagram.com/">@<span id="cpa_stalkee_un"></span></a>
             </div>
             <div class="stalker_time">
               You have not had a life for
