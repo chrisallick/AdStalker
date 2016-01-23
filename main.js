@@ -200,16 +200,17 @@ function findAds() {
 					var wrapperHeight = $(that).height();
 					var diff = Math.abs(wrapperWidth-wrapperHeight);
 					if( diff < 100 ) {
-						var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
+						var adIndex = Math.round(Math.random() * (basicAds.length-1))
 						basicAds[adIndex].bind(that)(wrapperWidth, wrapperHeight, images, keys);
 					} else {
-						var adIndex = bannerAds.length > 1 ? Math.round(Math.random() * bannerAds.length-1) : 0;
+						var adIndex = Math.round(Math.random() * (bannerAds.length-1));
 						bannerAds[adIndex].bind(that)(wrapperWidth, wrapperHeight, images, keys);
 					}
 					$(that).find('.cpa_custom_img_wrapper').removeClass("pulse2");
 					$(that).addClass("loaded");
 
 				}, false);
+
 			}
 		});
 	}
