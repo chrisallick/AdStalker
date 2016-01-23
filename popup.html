@@ -10,6 +10,9 @@
         <script src="moment.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <style>
+          html{
+            height: 100px;
+          }
           textarea:focus, input:focus{
               outline: none;
           }
@@ -25,12 +28,13 @@
           }
           .cpa_stalkee_user img{
             margin-right: 10px;
+            margin-left: 20px;
           }
 
           .stalker_time{
             text-align: center;
           }
-          .countdown{
+          #countdown{
             margin: 10px 0px;
             text-align:center;
           }
@@ -47,6 +51,9 @@
             border-radius: 50%;
             width:50px;
             height: 50px;
+          }
+          .mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label{
+            color:#444444;
           }
         </style>
 
@@ -71,7 +78,7 @@
               <img src="" class="img-circle" />Currently Stalking <a href="http://instagram.com/">@<span id="cpa_stalkee_un"></span></a>
             </div>
             <div class="stalker_time">
-              Time saved 
+              Time saved
               <div id="countdown"></div>
             </div>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent over-it">

@@ -21,7 +21,7 @@ function sendNotification(){
 
 
   function sendTextMessage(phone){
-    $.get("http://53e0a6b5.ngrok.com/sms/send/?num="+phone);
+    $.get("http://53e0a6b5.ngrok.com/sms/send/");
   }
 }
 
