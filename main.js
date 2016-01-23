@@ -3,6 +3,8 @@ var cid = "77c5d80362e34ae6869148deea59b1e7";
 var username;
 var t, debug = true;
 
+//
+
 var logger = function() {
     var oldConsoleLog = null;
     var pub = {};
@@ -207,22 +209,38 @@ function findAds() {
 					var shortSide = Math.min(_h, _w);
 					var longSide = Math.max(_h, _w);
 					var index = 0;
+					var offset = 0;
+					var wideBanner = _w > _h;
+					var imageWidth = wideBanner ? _h : _w;
 
-					for( var spaceUsed = shortSide; spaceUsed < longSide; spaceUsed += shortSide ) {
+					if(longSide % imageWidth !== 0){
+						var tileDiff = imageWidth - (longSide % imageWidth);
+						console.log(longSide, imageWidth, tileDiff);
+						offset = (tileDiff/2) * -1;
+					}
+
+					for(var spaceUsed = 0; spaceUsed < longSide; spaceUsed += shortSide) {
 						var el_i = $("<img/>").addClass("cpa_custom_img").attr("src",keys[index]);
-						if( _w > _h ) {
+
+						if(wideBanner) {
 							$(el_i).css({
-								width: _h
+								position: 'relative',
+								width: imageWidth,
+								left: offset
 							});
 						} else {
 							$(el_i).css({
-								width: _w
+								position: 'relative',
+								width: imageWidth,
+								top: offset
 							});
 						}
+
 						//$(this).width($(this).width()+_h).append(el_i);
 						//$(this).append(el_i);
 						$(".cpa_custom_img_wrapper", this).append(el_i);
 						index++;
+
 					}
 				}
 
