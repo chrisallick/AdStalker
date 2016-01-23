@@ -94,7 +94,7 @@ function findAds() {
 	if( _images_loaded ) {
 		$(".cpa_custom_wrapper").each(function(index,value){
 			if( !$(this).hasClass("loaded") ) {
-				var keys = Object.keys(_images);
+				var keys = shuffle(Object.keys(_images));
 
 				var _w = $(this).width();
 				var _h = $(this).height();
@@ -147,6 +147,26 @@ function findAds() {
 	t = setTimeout(function(){
 		findAds();
 	}, 1000);
+}
+
+function shuffle(array) {
+    var counter = array.length, temp, index;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
 }
 
 var cid = "77c5d80362e34ae6869148deea59b1e7";
