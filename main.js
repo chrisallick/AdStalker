@@ -193,8 +193,7 @@ function findAds() {
 					basicAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				} else {
 					var adIndex = Math.round(Math.random() * (bannerAds.length-1));
-					// bannerAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
-					bannerAds[1].bind(this)(wrapperWidth, wrapperHeight, images, keys);
+					bannerAds[adIndex].bind(this)(wrapperWidth, wrapperHeight, images, keys);
 				}
 
 				$(this).addClass("loaded");
@@ -207,25 +206,6 @@ function findAds() {
 	}, 1000);
 }
 
-function shuffle(array) {
-    var counter = array.length, temp, index;
-
-    // While there are elements in the array
-    while (counter > 0) {
-        // Pick a random index
-        index = Math.floor(Math.random() * counter);
-
-        // Decrease counter by 1
-        counter--;
-
-        // And swap the last element with it
-        temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
-    }
-
-    return array;
-}
 
 var basicAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
@@ -243,7 +223,7 @@ var basicAds = [
 
 		var el_caption = $("<p/>")
 			.text(images[keys[0]].caption)
-			.addClass("cpa_custom_p");
+			.addClass("cpa_custom_p_background");
 		$(this).append(el_caption);
 	}
 ];
@@ -286,33 +266,93 @@ var bannerAds = [
 	},
 	function(wrapperWidth, wrapperHeight, images, keys){
 		var wideBanner = wrapperWidth > wrapperHeight;
-		var offset, blurSize;
+		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
+		var offset, blur, fontSize;
+		var backgroundWidth = wideBanner ? (wrapperWidth*1.05) : (wrapperHeight*1.05);
+		var imageWidth = wideBanner ? (wrapperWidth*0.3) : (wrapperHeight*0.3);
+		var captionText = images[keys[0]].caption;
 
 		if(wideBanner){
 			offset = (wrapperHeight - wrapperWidth) / 2;
-			blurSize = wrapperWidth / 20;
+			blur = 'blur(' + (wrapperWidth / 20) + 'px)';
 		}else{
 			offset = (wrapperWidth - wrapperHeight) / 2;
-			blurSize = wrapperHeight / 20;
+			blur = wrapperHeight / 20;
 		}
 
-		console.log(wrapperHeight, wrapperWidth, offset);
 		var el_background = $("<img/>")
 			.addClass("cpa_custom_img")
 			.attr("src", keys[0])
 			.css({
-				position: 'relative',
-				width: wideBanner ? (wrapperWidth*1.05) : (wrapperHeight*1.05),
-				WebkitFilter: 'blur(' + blurSize + 'px)'
+				position: 'absolute',
+				width: backgroundWidth,
+				filter: blur,
+				WebkitFilter: blur
 			});
+		var el_image = $("<img/>")
+			.addClass("cpa_custom_img")
+			.attr("src", keys[0])
+			.css({
+				position: 'absolute',
+				width: imageWidth
+			});
+		var el_caption = $("<div/>")
+			.addClass("cpa_custom_p")
+			.css({
+				position: 'absolute',
+				display: 'table',
+				height: "100%",
+				margin: 0
+			});
+		var el_caption_text = $("<span/>")
+			.text(captionText)
+			.addClass("cpa_dynamic_text")
+			.css({
+				display: 'table-cell',
+				verticalAlign: 'middle'
+			});
+		el_caption.append(el_caption_text);
+
 
 		if(wideBanner){
+			var captionWidth = (wrapperWidth * 0.4) - 20;
+			var captionHeight = wrapperHeight - 20;
+			var captionArea = captionWidth * captionHeight;
+			var charArea = captionArea / captionText.length;
+			fontSize = Math.round(Math.sqrt(charArea));
+
 			el_background.css({top: offset});
+			el_image.css({
+				top: (wrapperHeight - imageWidth) / 2,
+				left: wrapperWidth * 0.6,
+			});
+			el_caption.css({
+				width: '40%',
+				left: wrapperWidth * 0.1
+			});
+			el_caption_text.css({fontSize: fontSize});
 		}else{
+			var captionWidth = wrapperWidth - 20;
+			var captionHeight = (wrapperHeight * 0.4) - 20;
+			var captionArea = captionWidth * captionHeight;
+			var charArea = captionArea / captionText.length;
+			fontSize = Math.round(Math.sqrt(charArea));
+
 			el_background.css({left: offset});
+			el_image.css({
+				top: wrapperHeight * 0.6,
+				left: (wrapperWidth - imageWidth) / 2
+			});
+			el_caption.css({
+				height: '40%',
+				top: wrapperWidth * 0.1
+			});
+			el_caption_text.css({fontSize: fontSize});
 		}
 
 		$(".cpa_custom_img_wrapper", this).append(el_background);
+		$(".cpa_custom_img_wrapper", this).append(el_image);
+		$(".cpa_custom_img_wrapper", this).append(el_caption);
 	}
 ];
 
@@ -332,3 +372,23 @@ $(window).load(function(){
 $(document).ready(function() {
 
 });
+
+function shuffle(array) {
+    var counter = array.length, temp, index;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}
