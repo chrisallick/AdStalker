@@ -210,8 +210,6 @@ function findAds() {
 					$(that).addClass("loaded");
 
 				}, false);
-
-
 			}
 		});
 	}
@@ -221,44 +219,47 @@ function findAds() {
 	}, 1000);
 }
 
-function shuffle(array) {
-    var counter = array.length, temp, index;
-
-    // While there are elements in the array
-    while (counter > 0) {
-        // Pick a random index
-        index = Math.floor(Math.random() * counter);
-
-        // Decrease counter by 1
-        counter--;
-
-        // And swap the last element with it
-        temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
-    }
-
-    return array;
-}
 
 var basicAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
+		var el_wrapperTarget = $(".cpa_custom_img_wrapper", this);
+		var captionPositions = ['cpa_caption_top', 'cpa_caption_middle', 'cpa_caption_bottom',];
+		var captionPosition = captionPositions[Math.round(Math.random() * captionPositions.length-1)];
 		var wideBanner = wrapperWidth > wrapperHeight;
-		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
-		var el_image = $("<img/>").addClass("cpa_custom_img_single").attr("src",keys[0]);
+		var imageWidth = wideBanner ? wrapperWidth : wrapperHeight;
+		var captionText = images[keys[0]].caption;
+		var el_image = $("<img/>")
+			.addClass("cpa_custom_img_single")
+			.attr("src", keys[0]);
 
 		$(el_image).css({
 			width: imageWidth
 		});
 
-		$(".cpa_custom_img_wrapper", this).append(el_image);
+		el_wrapperTarget.append(el_image);
 
-		var el_caption = $("<p/>").text(images[keys[0]].caption).addClass("cpa_custom_p");
-		$(this).append(el_caption);
+		if(captionText){
+			var el_caption = $("<div/>")
+				.addClass("cpa_custom_p")
+				.css({
+					position: 'absolute',
+					display: 'table',
+					height: "100%",
+					padding: 0
+				});
+			var el_caption_text = $("<span/>")
+				.text(captionText)
+				.addClass("cpa_caption_vignette")
+				.addClass(captionPosition)
+				.css({padding: 10});
+			el_caption.append(el_caption_text);
+			$(this).append(el_caption);
+		}
 	}
 ];
 var bannerAds = [
 	function(wrapperWidth, wrapperHeight, images, keys){
+		var el_wrapperTarget = $(".cpa_custom_img_wrapper", this);
 		var shortSide = Math.min(wrapperHeight, wrapperWidth);
 		var longSide = Math.max(wrapperHeight, wrapperWidth);
 		var index = 0;
@@ -268,12 +269,13 @@ var bannerAds = [
 
 		if(longSide % imageWidth !== 0){
 			var tileDiff = imageWidth - (longSide % imageWidth);
-			console.log(longSide, imageWidth, tileDiff);
 			offset = (tileDiff/2) * -1;
 		}
 
 		for(var spaceUsed = 0; spaceUsed < longSide; spaceUsed += shortSide) {
-			var el_image = $("<img/>").addClass("cpa_custom_img").attr("src",keys[index]);
+			var el_image = $("<img/>")
+				.addClass("cpa_custom_img")
+				.attr("src", keys[index]);
 
 			if(wideBanner) {
 				$(el_image).css({
@@ -289,9 +291,109 @@ var bannerAds = [
 				});
 			}
 
-			$(".cpa_custom_img_wrapper", this).append(el_image);
+			el_wrapperTarget.append(el_image);
 			index++;
 		}
+
+		var el_bannerVignette = $("<div/>").addClass("cpa_banner_vignette")
+		if(wideBanner){
+			el_bannerVignette.addClass("cpa_banner_landscape");
+		}else{
+			el_bannerVignette.addClass("cpa_banner_portait");
+		}
+
+		$(this).append(el_bannerVignette);
+	},
+	function(wrapperWidth, wrapperHeight, images, keys){
+		var el_wrapperTarget = $(".cpa_custom_img_wrapper", this);
+		var wideBanner = wrapperWidth > wrapperHeight;
+		var imageWidth = wideBanner ? wrapperHeight : wrapperWidth;
+		var offset, blur, fontSize;
+		var backgroundWidth = wideBanner ? (wrapperWidth*1.05) : (wrapperHeight*1.05);
+		var imageWidth = wideBanner ? (wrapperWidth*0.3) : (wrapperHeight*0.3);
+		var captionText = images[keys[0]].caption;
+
+		if(wideBanner){
+			offset = (wrapperHeight - wrapperWidth) / 2;
+			blur = 'blur(' + (wrapperWidth / 20) + 'px)';
+		}else{
+			offset = (wrapperWidth - wrapperHeight) / 2;
+			blur = wrapperHeight / 20;
+		}
+
+		var el_background = $("<img/>")
+			.addClass("cpa_custom_img")
+			.attr("src", keys[0])
+			.css({
+				position: 'absolute',
+				width: backgroundWidth,
+				filter: blur,
+				WebkitFilter: blur
+			});
+		var el_image = $("<img/>")
+			.addClass("cpa_custom_img")
+			.attr("src", keys[0])
+			.css({
+				position: 'absolute',
+				width: imageWidth
+			});
+		var el_caption = $("<div/>")
+			.addClass("cpa_custom_p")
+			.css({
+				position: 'absolute',
+				display: 'table',
+				height: "100%",
+				margin: 0
+			});
+		var el_caption_text = $("<span/>")
+			.text(captionText)
+			.addClass("cpa_dynamic_text")
+			.css({
+				display: 'table-cell',
+				verticalAlign: 'middle'
+			});
+		el_caption.append(el_caption_text);
+
+
+		if(wideBanner){
+			var captionWidth = (wrapperWidth * 0.4) - 20;
+			var captionHeight = wrapperHeight - 20;
+			var captionArea = captionWidth * captionHeight;
+			var charArea = captionArea / captionText.length;
+			fontSize = Math.round(Math.sqrt(charArea));
+
+			el_background.css({top: offset});
+			el_image.css({
+				top: (wrapperHeight - imageWidth) / 2,
+				left: wrapperWidth * 0.6,
+			});
+			el_caption.css({
+				width: '40%',
+				left: wrapperWidth * 0.1
+			});
+			el_caption_text.css({fontSize: fontSize});
+		}else{
+			var captionWidth = wrapperWidth - 20;
+			var captionHeight = (wrapperHeight * 0.4) - 20;
+			var captionArea = captionWidth * captionHeight;
+			var charArea = captionArea / captionText.length;
+			fontSize = Math.round(Math.sqrt(charArea));
+
+			el_background.css({left: offset});
+			el_image.css({
+				top: wrapperHeight * 0.6,
+				left: (wrapperWidth - imageWidth) / 2
+			});
+			el_caption.css({
+				height: '40%',
+				top: wrapperWidth * 0.1
+			});
+			el_caption_text.css({fontSize: fontSize});
+		}
+
+		el_wrapperTarget.append(el_background);
+		el_wrapperTarget.append(el_image);
+		el_wrapperTarget.append(el_caption);
 	}
 ];
 
@@ -312,3 +414,23 @@ $(window).load(function(){
 $(document).ready(function() {
 
 });
+
+function shuffle(array) {
+    var counter = array.length, temp, index;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}

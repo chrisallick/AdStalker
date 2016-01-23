@@ -18,7 +18,7 @@
 
 		var options = $.extend({
 			callback	: function(){},
-			start		: new Date()
+			start		: new Date(2016, 0, 23, 12, 00)
 		},prop);
 
 		var passed = 0, d, h, m, s,
