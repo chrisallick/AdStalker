@@ -1,3 +1,8 @@
+//globals
+var cid = "77c5d80362e34ae6869148deea59b1e7";
+var username;
+var t, debug = true;
+
 var logger = function() {
     var oldConsoleLog = null;
     var pub = {};
@@ -18,38 +23,117 @@ var logger = function() {
     return pub;
 }();
 
-var t, debug = true;
+
+var stalkabase = function() {
+	var currentData = {};
+	// need to check if all have been marked seen to start over
+	function checkForAllSeen(currentImages) {
+		var keys = Object.keys(currentImages);
+		var length = keys.length;
+		var allSeen = true;
+		for(var i=0; i < length; i++) {
+			var key = keys[i];
+			var currentImage = currentImages[key];
+			if(!currentImage.seen) {
+				allSeen = false;
+			}
+		}
+		if(allSeen) {
+			for(var i=0; i < length; i++) {
+				var key = keys[i];
+				var currentImage = currentImages[key];
+				currentImage.seen = false;
+			}
+			currentData[username] = currentImages;
+			chrome.storage.local.set({"cpa_stalkee_image_data": JSON.stringify(currentData)});
+		}
+		return allSeen;
+	}
+	// loops through and finds images that haven't been seen
+	function findImages(amount, currentImages, currentFound) {
+		var images = currentFound;
+		var count = 0;
+		var keys = Object.keys(currentImages);
+		var length = keys.length;
+		checkForAllSeen(currentImages);
+		for(var i=0; i < length && count <= amount; i++) {
+			var key = keys[i];
+			var currentImage = currentImages[key];
+			if(!currentImage.seen) {
+				currentFound[key] = currentImage;
+				currentImage.seen = true;
+				count++;
+			}
+		}
+	}
+	// main call to get the images, loops through until it gets the "amount" passed
+	// in or if your images count is less than the amount you request it will return
+	// how many images you currently have available
+	function getImages(amount) {
+		var currentImages = currentData[username];
+		var currentImagesLength = Object.keys(currentImages);
+		var foundLength = 0;
+		if(amount > currentImagesLength) {
+			amount = currentImagesLength
+		}
+		var currentFound = {};
+		while(foundLength < amount) {
+			findImages(amount, currentImages, currentFound);
+			var foundLength = Object.keys(currentFound).length;
+			amount = amount - foundLength;
+		}
+		chrome.storage.local.set({"cpa_stalkee_image_data": JSON.stringify(currentData)});
+		return currentFound;
+	}
+	function loadPhotos(_id, callback) {
+		var currentImages = currentData[username];
+		$.get("https://api.instagram.com/v1/users/"+_id+"/media/recent/?client_id="+cid, function(response) {
+			for( var i = 0; i < response.data.length; i++ ) {
+				var img_url = response.data[i].images.low_resolution.url;
+				var caption = "";
+				if(!currentImages[img_url]) {
+					if( response.data[i].caption ) {
+						caption = response.data[i].caption.text;
+					}
+
+					// console.log( img_url, caption );
+					currentImages[img_url] = {
+						caption: caption,
+						seen: false
+					}
+				}
+			}
+
+			_images_loaded = true;
+		});
+	}
+	function init(_id, callback) {
+		chrome.storage.local.get("cpa_stalkee_image_data", function (result) {
+	        if( result && result.cpa_stalkee_image_data ) {
+	        	currentData = JSON.parse(result.cpa_stalkee_image_data);
+	        }
+	        if(!currentData[username]) {
+	        	currentData[username] = {};
+	        }
+	        loadPhotos(_id);
+	    });
+	}
+	return {
+		getImages: getImages,
+		init: init
+	};
+}();
+
 if( !debug ) {
 	logger.disableLogger();
 }
 
-$(window).load(function(){
-
-});
-
 var _images = {};
 var _images_loaded = false;
-function loadPhotos(_id) {
-	$.get("https://api.instagram.com/v1/users/"+_id+"/media/recent/?client_id="+cid, function(data) {
-		for( var i = 0; i < data.data.length; i++ ) {
-			var img_url = data.data[i].images.low_resolution.url;
-			var caption = "";
-			
-			if( data.data[i].caption ) {
-				caption = data.data[i].caption.text;
-			}			 
-
-			// console.log( img_url, caption );
-			_images[img_url] = caption;
-		}
-
-		_images_loaded = true;
-	});
-}
 
 function getInstagram() {
 	$.get("https://api.instagram.com/v1/users/search?q="+username+"&client_id="+cid, function(data){
-		var d = data.data;	
+		var d = data.data;
 		var _id;
 		for( var i = 0; i < d.length; i++ ) {
 			if( d[i].username == username ) {
@@ -59,7 +143,8 @@ function getInstagram() {
 
 		if( _id ) {
 			// console.log( _id );
-			loadPhotos( _id );
+			stalkabase.init(_id);
+
 		}
 	});
 }
@@ -67,14 +152,14 @@ function getInstagram() {
 var _sizes = [15,30,31,33,60,90,125,150,210,240,250,280,300,336,350,400,468,480,600,728];
 function findAds() {
 	clearTimeout(t);
-	
+
 	$("iframe").each(function(index,value){
 		var _h = $(this).height();
 		var _w = $(this).width();
 		if( _sizes.indexOf(_h) != -1 ) {
 			if( _w > 15 ) {
 				// console.log( _w, _h );
-				
+
 				var p = $(this).parent();
 
 				var style = $(this).getStyleObject();
@@ -91,7 +176,7 @@ function findAds() {
 					overflow: "hidden",
 					position: "relative"
 				}).append(el_i_w).addClass("cpa_custom_wrapper");
-				
+
 				$(p).append( el );
 				$(this).remove();
 			}
@@ -101,6 +186,7 @@ function findAds() {
 	if( _images_loaded ) {
 		$(".cpa_custom_wrapper").each(function(index,value){
 			if( !$(this).hasClass("loaded") ) {
+				var _images = stalkabase.getImages(10);
 				var keys = Object.keys(_images);
 
 				var _w = $(this).width();
@@ -151,9 +237,6 @@ function findAds() {
 	}, 1000);
 }
 
-var cid = "77c5d80362e34ae6869148deea59b1e7";
-var username = "mpallick";
-var t;
 $(window).load(function(){
 	t = setTimeout(function(){
 		findAds();
