@@ -201,7 +201,7 @@ function findAds() {
 
 					$(".cpa_custom_img_wrapper", this).append(el_i);
 
-					var el_p = $("<p/>").text(_images[keys[0]]).addClass("cpa_custom_p");
+					var el_p = $("<p/>").text(_images[keys[0]].caption).addClass("cpa_custom_p");
 					$(this).append(el_p);
 				} else {
 					var shortSide = Math.min(_h, _w);
