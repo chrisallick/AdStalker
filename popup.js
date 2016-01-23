@@ -4,9 +4,10 @@ $(document).ready(function(){
         event.preventDefault();
         var stalkee = $("#cpa_text").val();
         chrome.storage.local.set({'cpa_stalkee': stalkee,'cpa_time': new Date()}, function (result) {
-            $('#cpa_stalkee_un').text(stalkee);
-            $('.active-stalker').show();
-            $('.add-stalker').hide();
+          $('.add-stalker').hide();
+          $('#cpa_stalkee_un').text(stalkee);
+          $('.active-stalker').show();
+          $('#countdown').countup();
         });
     });
 
@@ -17,7 +18,6 @@ $(document).ready(function(){
         $('.active-stalker').show();
         $('#countdown').countup();
       }
-        console.log( result );
     });
 
     function clearUser(){
@@ -26,6 +26,9 @@ $(document).ready(function(){
 
     $('.over-it').on('click',function(){
       chrome.storage.local.set({'cpa_stalkee': ''},function(){
+        $('#countdown').remove();
+        $('#cpa_stalkee_un').text('');
+        $('#cpa_text').val('');
         $('.active-stalker').hide();
         $('.add-stalker').show();
       });
