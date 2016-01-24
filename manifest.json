@@ -1,7 +1,7 @@
 {
-    "name": "Ad Stalker v0.1",
-    "description": "Casually creep while on the clock.",
-    "version": "0.1",
+    "name": "AdStalker",
+    "description": "Stalk Efficiently",
+    "version": "1.3",
     "manifest_version": 2,
     "content_scripts": [{
         "matches": ["<all_urls>"],
@@ -19,7 +19,8 @@
         "default_popup": "popup.html"
     },
     "icons": {
-        "64": "icon64.png"
+        "64": "icon64.png",
+        "128": "icon128.png"
     },
     "commands": {
         "presets-01": {
