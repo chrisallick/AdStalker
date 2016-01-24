@@ -1,9 +1,9 @@
 .countdownHolder{
-	width:340px;
+	width:900px;
 	margin:0 auto;
-	font: 24px/1.5 'Open Sans Condensed',sans-serif;
+	font: 74px/1.5 'Open Sans Condensed',sans-serif;
 	text-align:center;
-	letter-spacing:-3px;
+	letter-spacing:-4px;
 }
 
 .mdl-textfield__label:after{
@@ -62,7 +62,7 @@
 
 .countDiv{
 	display:inline-block;
-	width:16px;
+	width:60px;
 	height:1.6em;
 	position:relative;
 }
