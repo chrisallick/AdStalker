@@ -11,10 +11,9 @@ $(document).ready(function(){
           $('.add-stalker').hide();
           $('#cpa_stalkee_un').text(stalkee);
           $('.active-stalker').show();
-          $('#countdown').countup();
-          $('html').height('350px');
-          $('body').height('350px');
-          $('.demo-card-wide').height('350px');
+          $('html').height('200px');
+          $('body').height('200px');
+          $('.demo-card-wide').height('200px');
           chrome.storage.local.get("cpa_stalkee_image_data", function(result) {
                 if( result && result.cpa_stalkee_image_data ) {
                     currentData = JSON.parse(result.cpa_stalkee_image_data);
@@ -62,11 +61,10 @@ $(document).ready(function(){
         $('.add-stalker').hide();
         $('#cpa_stalkee_un').text(result.cpa_stalkee);
         $('.active-stalker').show();
-        $('#countdown').countup();
         $('.img-circle').attr('src',result.cpa_stalkee_user_data.profile_picture);
-        $('html').height('350px');
-        $('body').height('350px');
-        $('.demo-card-wide').height('350px');
+        $('html').height('200px');
+        $('body').height('200px');
+        $('.demo-card-wide').height('200px');
       }
     });
 
@@ -76,7 +74,6 @@ $(document).ready(function(){
 
     $('.over-it').on('click',function(){
       chrome.storage.local.set({'cpa_stalkee': ''},function(){
-        $('#countdown').children().remove();
         $('#cpa_stalkee_un').text('');
         $('#cpa_text').val('');
         $('.active-stalker').hide();
