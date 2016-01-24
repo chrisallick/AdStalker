@@ -8,6 +8,9 @@
         "js": ["jq.2.min.js", "jquery.getStyleObject.js", "main.js"],
         "css": ["main.css"]
     }],
+    "chrome_url_overrides": {
+        "newtab": "newtab.html"
+    },
     "background": {
       "scripts": ["jq.2.min.js","notifications.js"]
     },
