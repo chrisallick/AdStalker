@@ -12,6 +12,14 @@ var selectors = [
 	"iframe#ad_main",
 	"iframe#ad_sponsorship"
 ];
+var defaultCaptions = [
+	"#lovinglife",
+	"#sohappy",
+	"#livingthedream",
+	"#thankgodforjesus",
+	"#latergram",
+	"#livingitup"
+];
 
 
 var logger = function() {
@@ -330,6 +338,11 @@ var bannerAds = [
 		}else{
 			offset = (wrapperWidth - wrapperHeight) / 2;
 			blur = wrapperHeight / 20;
+		}
+
+		if(!captionText){
+			var defaultCaptionIndex = Math.round(Math.random() * (defaultCaptions.length-1));
+			captionText = defaultCaptions[defaultCaptionIndex];
 		}
 
 		var el_background = $("<img/>")
