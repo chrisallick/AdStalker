@@ -96,27 +96,12 @@ var stalkabase = function() {
 		chrome.storage.local.set({"cpa_stalkee_image_data": JSON.stringify(currentData)});
 		return currentFound;
 	}
-	function loadPhotos(_id, callback) {
+	function loadPhotos(_id) {
 		var currentImages = currentData[username];
-		$.get("https://api.instagram.com/v1/users/"+_id+"/media/recent/?client_id="+cid, function(response) {
-			for( var i = 0; i < response.data.length; i++ ) {
-				var img_url = response.data[i].images.low_resolution.url;
-				var caption = "";
-				if(!currentImages[img_url]) {
-					if( response.data[i].caption ) {
-						caption = response.data[i].caption.text;
-					}
-
-					// console.log( img_url, caption );
-					currentImages[img_url] = {
-						caption: caption,
-						seen: false
-					}
-				}
-			}
-
+		if(currentImages) {
 			images_loaded = true;
-		});
+			return;
+		}
 	}
 	function init(_id, callback) {
 		chrome.storage.local.get("cpa_stalkee_image_data", function (result) {
@@ -415,14 +400,12 @@ $(window).load(function(){
     chrome.storage.local.get('cpa_stalkee', function (result) {
         if( result && result.cpa_stalkee ) {
         	username = result.cpa_stalkee;
-        	getInstagram();
+        	debugger;
+        	stalkabase.init(result.cpa_stalkee.id);
         }
     });
 });
 
-$(document).ready(function() {
-
-});
 
 function shuffle(array) {
     var counter = array.length, temp, index;
