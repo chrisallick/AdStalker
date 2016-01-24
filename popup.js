@@ -25,8 +25,6 @@ $(document).ready(function(){
                 $.get("https://api.instagram.com/v1/users/search?q="+stalkee+"&client_id="+cid, function(response){
                     userData = response.data[0];
                     $('.img-circle').attr('src',userData.profile_picture);
-                    alert(userData);
-                    console.log(userData);
                     chrome.storage.local.set({'cpa_stalkee_user_data': userData}, function (result) {
                         $.get("https://api.instagram.com/v1/users/"+userData.id+"/media/recent/?count=40&client_id="+cid, function(response) {
                             var currentImages = currentData[stalkee];
