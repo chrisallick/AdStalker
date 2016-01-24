@@ -249,6 +249,7 @@ var basicAds = [
 		el_wrapperTarget.empty();
 		el_wrapperTarget.append(el_image);
 
+		$('.cpa_custom_p', this).remove();
 		if(captionText){
 			var el_caption = $("<div/>")
 				.addClass("cpa_custom_p")
@@ -268,7 +269,6 @@ var basicAds = [
 				});
 			el_caption.append(el_caption_text);
 
-			$('.cpa_custom_p', this).remove();
 			$(this).append(el_caption);
 		}
 	}
