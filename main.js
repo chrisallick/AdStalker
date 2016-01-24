@@ -5,7 +5,7 @@ var t, debug = true;
 
 var selectors = [
 	"iframe[src*=2mdm]",
-	"iframe[id*=google_ads_iframe_]",
+	"iframe[name*=google_ads_iframe_]",
 	"div.ego_unit",
 	"div._38vo",
 	"a.profilePicThumb",
@@ -207,8 +207,8 @@ function findAds() {
 						bannerAds[adIndex].bind(that)(wrapperWidth, wrapperHeight, images, keys);
 					}
 					$(that).find('.cpa_custom_img_wrapper').removeClass("pulse2");
+					$(this).addClass("loaded");
 					$(that).addClass("loaded");
-
 				}, false);
 
 			}
