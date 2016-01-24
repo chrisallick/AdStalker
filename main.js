@@ -237,6 +237,7 @@ var basicAds = [
 			width: imageWidth
 		});
 
+		el_wrapperTarget.empty();
 		el_wrapperTarget.append(el_image);
 
 		if(captionText){
@@ -254,6 +255,8 @@ var basicAds = [
 				.addClass(captionPosition)
 				.css({padding: 10});
 			el_caption.append(el_caption_text);
+
+			$('.cpa_custom_p', this).remove();
 			$(this).append(el_caption);
 		}
 	}
