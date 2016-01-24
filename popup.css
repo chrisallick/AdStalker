@@ -1,0 +1,85 @@
+@font-face {
+  font-family: "adblocker";
+  src: url('avenir.otf');
+}
+html{
+  height: 100px;
+  font-family: "adblocker";
+}
+.mdl-textfield{
+  width:260px;
+  margin-left: 10px;
+  margin-top: 7px;
+  font-family: "adblocker";
+}
+.demo-card-wide.mdl-card.mdl-shadow--2dp {
+    background-color: #FFF64F;
+}
+textarea:focus, input:focus, a:focus{
+    outline: none;
+}
+a {
+  color: #0103FF;
+}
+.demo-card-wide {
+  width: 400px;
+  height:100px;
+}
+.mdl-card{
+  min-height:100px;
+}
+.active-stalker{
+  display:none;
+  padding: 30px 0px;
+  width: 400px;
+  height:350px;
+}
+.cpa_stalkee_user{
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "adblocker";
+}
+
+.cpa_stalkee_user img{
+    margin-bottom: 20px;
+}
+
+.stalker_time{
+  text-align: center;
+  margin-top: 30px;
+  font-weight: bold;
+  font-family: "adblocker";
+}
+#countdown{
+  margin: 20px 30px;
+  text-align:center;
+}
+.mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 13px;
+  font-weight: bold;
+  font-family: "adblocker";
+  letter-spacing: 1px;
+}
+.stalk-now{
+  width: 90px;
+  margin-left: 17px;
+}
+
+.over-it{
+  margin-left: 124px;
+  width: 150px;
+}
+
+
+.img-circle {
+  border-radius: 50%;
+  width:50px;
+  height: 50px;
+}
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label{
+  color:#000000;
+  font-family: "adblocker";
+}
