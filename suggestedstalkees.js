@@ -16,10 +16,37 @@ window.stalkdar = function() {
          followed_by:15416,
          follows:1214
       }
+    }, {
+        username: "mpallick",
+        bio: "SF native with a love for all things food and wine paired with music, outdoors and adventure.",
+        website: "",
+        profile_picture: "https://scontent.cdninstagram.com/hphotos-xfa1/t51.2885-19/11355837_958743797502399_668773975_a.jpg",
+        full_name: "Mollie Allick",
+        counts: {
+        media: 304,
+        followed_by: 564,
+        follows: 281
+        },
+        id: "1595426"
+    }, {
+        username: "jaminsky",
+        bio: "",
+        website: "",
+        profile_picture: "https://scontent.cdninstagram.com/hphotos-xft1/t51.2885-19/11849031_1630293520551990_321560343_a.jpg",
+        full_name: "Ben Kaminsky",
+        counts: {
+        media: 126,
+        followed_by: 1632,
+        follows: 203
+        },
+        id: "35026200"
     }];
 
-    function get() {
-        return suggestedStalkees.slice(0,2);
+    function recommend() {
+        var users = suggestedStalkees.slice(0,3);
+        _.each(users, function(user){
+            $(".recommended_users").append("<div class='recommend-user' data-user=" + user.username + "><img src='" + user.profile_picture + "' /><div class='" + user.username + "'>@" + user.username + "</div><button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent stalk-btn'>STALK</button></div>");
+        });
     }
 
     function init() {
@@ -37,13 +64,10 @@ window.stalkdar = function() {
                     });
                 },
                 function(cb) {
-                    async.whilst(
-                        function() {
-                            return usersCount <= 3;
-                        },
+                    async.parallel([
                         function(cb) {
                             var data = locations.data;
-                            var location = data[locationCtr++];
+                            var location = data[0];
                             var locationId = location.id;
                             $.get("https://api.instagram.com/v1/locations/" + locationId + "/media/recent?client_id=" + cid, function(response) {
                                 var posts = _.shuffle(response.data);
@@ -56,6 +80,21 @@ window.stalkdar = function() {
                                 cb(null);
                             });
                         },
+                        function(cb) {
+                            var data = locations.data;
+                            var location = data[1];
+                            var locationId = location.id;
+                            $.get("https://api.instagram.com/v1/locations/" + locationId + "/media/recent?client_id=" + cid, function(response) {
+                                var posts = _.shuffle(response.data);
+                                var selectedPosts = _.slice(posts, 0, 3);
+                                _.each(selectedPosts, function(selectedPost) {
+                                    var user = selectedPost.user;
+                                    suggestedStalkees.push(user);
+                                });
+                                usersCount++;
+                                cb(null);
+                            });
+                        }],
                         cb
                     );
                 },
@@ -69,6 +108,6 @@ window.stalkdar = function() {
     }
     return {
         init: init,
-        get: get
+        recommend: recommend
     };
 }();
