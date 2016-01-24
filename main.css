@@ -103,30 +103,33 @@ iframe#ad_sponsorship {
 }
 
  .pulse2{
-    -webkit-animation: pulse2 3s linear infinite;
-    -moz-animation: pulse2 3s linear infinite;
-    -ms-animation: pulse2 3s linear infinite;
-    animation: pulse2 3s linear infinite;
+    -webkit-animation: pulse2 1.5s linear infinite;
+    -moz-animation: pulse2 1.5s linear infinite;
+    -ms-animation: pulse2 1.5s linear infinite;
+    animation: pulse2 1.5s linear infinite;
 }
 
 @keyframes "pulse2" {
  0% {
-    -ms-transform: scale(1);
-   transform: scale(1);
+    -webkit-transform: scale(0.1);
+    -moz-transform: scale(0.1);
+    -o-transform: scale(0.1);
+    -ms-transform: scale(0.1);
+    transform: scale(0.1);
  }
  50% {
-    -webkit-transform: scale(0.8);
-    -moz-transform: scale(0.8);
-    -o-transform: scale(0.8);
-    -ms-transform: scale(0.8);
-    transform: scale(0.8);
- }
- 100% {
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -o-transform: scale(1);
     -ms-transform: scale(1);
     transform: scale(1);
+ }
+ 100% {
+    -webkit-transform: scale(.1);
+    -moz-transform: scale(.1);
+    -o-transform: scale(.1);
+    -ms-transform: scale(.1);
+    transform: scale(.1);
  }
 
 }
@@ -149,16 +152,16 @@ iframe#ad_sponsorship {
 
 @-webkit-keyframes "pulse2" {
  0% {
-    -ms-transform: scale(1);
-   transform: scale(1);
+    -ms-transform: scale(.5);
+   transform: scale(.5);
  }
- 50% {
-   -webkit-transform: scale(0.8);
-   transform: scale(0.8);
- }
- 100% {
+ 70% {
    -webkit-transform: scale(1);
    transform: scale(1);
+ }
+ 100% {
+   -webkit-transform: scale(.5);
+   transform: scale(.5);
  }
 
 }
