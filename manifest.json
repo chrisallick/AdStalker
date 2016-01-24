@@ -5,7 +5,7 @@
     "manifest_version": 2,
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": ["jq.2.min.js", "jquery.getStyleObject.js", "main.js"],
+        "js": ["async.js", "jq.2.min.js", "jquery.getStyleObject.js", "lodash.js", "main.js"],
         "css": ["main.css"]
     }],
     "chrome_url_overrides": {
@@ -15,6 +15,8 @@
       "scripts": ["jq.2.min.js","notifications.js"]
     },
     "permissions": [
+        "contentSettings",
+        "geolocation",
         "tabs", "http://*/*", "https://*/*", "storage", "notifications"
     ],
     "browser_action": {

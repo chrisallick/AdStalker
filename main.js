@@ -21,6 +21,62 @@ var defaultCaptions = [
 	"#livingitup"
 ];
 
+var suggestedStalkers = [];
+
+var stalkdar = function() {
+
+	function init() {
+		var locations;
+		var usersCount = 0;
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude;
+			var locationCtr = 0;
+			async.series([
+				function(cb) {
+					$.get("https://api.instagram.com/v1/locations/search?client_id=" + cid + "&lat=" + lat + "&lng=" + lng, function(response) {
+						locations = response;
+						cb(null, response);
+					});
+				},
+				function(cb) {
+					async.whilst(
+						function() {
+							return usersCount <= 3;
+						},
+						function(cb) {
+							var data = locations.data;
+							var location = data[locationCtr++];
+							var locationId = location.id;
+							$.get("https://api.instagram.com/v1/locations/" + locationId + "/media/recent?client_id=" + cid, function(response) {
+								var posts = _.shuffle(response.data);
+								var selectedPosts = _.slice(posts, 0, 3);
+								_.each(selectedPosts, function(selectedPost) {
+									var user = selectedPost.user;
+									suggestedStalkers.push(user);
+								});
+								usersCount++;
+								cb(null);
+							});
+						},
+						cb
+					);
+				},
+				function(result) {
+					console.log(suggestedStalkers);
+				}
+			]);
+		}, function() {
+			alert('how ya gonna stalk?');
+		});
+	}
+	return {
+		init: init
+	};
+}();
+
+stalkdar.init();
+
 
 var logger = function() {
     var oldConsoleLog = null;
