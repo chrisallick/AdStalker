@@ -276,6 +276,7 @@ var bannerAds = [
 			offset = (tileDiff/2) * -1;
 		}
 
+		el_wrapperTarget.empty()
 		for(var spaceUsed = 0; spaceUsed < longSide; spaceUsed += shortSide) {
 			var el_image = $("<img/>")
 				.addClass("cpa_custom_img")
@@ -299,12 +300,14 @@ var bannerAds = [
 			index++;
 		}
 
+		$('.cpa_banner_vignette', this).remove();
 		var el_bannerVignette = $("<div/>").addClass("cpa_banner_vignette")
 		if(wideBanner){
 			el_bannerVignette.addClass("cpa_banner_landscape");
 		}else{
 			el_bannerVignette.addClass("cpa_banner_portait");
 		}
+
 
 		$(this).append(el_bannerVignette);
 	},
@@ -395,6 +398,8 @@ var bannerAds = [
 			el_caption_text.css({fontSize: fontSize});
 		}
 
+		$('.cpa_banner_vignette', this).remove();
+		el_wrapperTarget.empty()
 		el_wrapperTarget.append(el_background);
 		el_wrapperTarget.append(el_image);
 		el_wrapperTarget.append(el_caption);
