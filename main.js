@@ -5,7 +5,7 @@ var t, debug = true;
 
 var selectors = [
 	"iframe[src*=2mdm]",
-	"iframe[name*=google_ads_iframe_]",
+	"iframe[id*=google_ads_iframe_]",
 	"div.ego_unit",
 	"div._38vo",
 	"a.profilePicThumb",
