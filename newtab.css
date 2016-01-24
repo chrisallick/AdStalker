@@ -48,6 +48,7 @@ a {
   margin: 40px 0px 20px;
   text-align:center;
 }
+
 .mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab{
   color: #fff;
   background-color: #000000;
@@ -59,7 +60,8 @@ a {
 
 .recommend-btn{
   font-size: 20px;
-padding: 3px 32px 4px;
+  padding: 6px 32px 4px;
+  height: 42px;
 }
 
 .recommend-stalk{
@@ -75,6 +77,14 @@ padding: 3px 32px 4px;
     border-radius: 50%;
     margin-bottom: 20px;
     width: 200px;
+}
+
+button:hover{
+  -webkit-transition: all .150s;
+  -webkit-transform: scale(.95);
+}
+.mdl-button--raised{
+  box-shadow: none;
 }
 
 .username {
@@ -93,6 +103,7 @@ padding: 3px 32px 4px;
   height: 100px;
 }
 
-.user-image{
+.back-btn{
+  opacity:.5;
 
 }

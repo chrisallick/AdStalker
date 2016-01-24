@@ -85,7 +85,16 @@ $(function() {
     });
   });
 
+  $('.back-btn').hover(function(){
+    $(this).fadeTo(10,1);
+  },function(event){
+    $(this).fadeTo(10,.5);
+  });
+
+
 });
+
+
 
 
 chrome.storage.local.get(['cpa_stalkee_user_data','cpa_time','cpa_stalkee'], function (result) {
