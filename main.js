@@ -289,22 +289,25 @@ var bannerAds = [
 		}
 
 		el_wrapperTarget.empty()
-		for(var spaceUsed = 0; spaceUsed < longSide; spaceUsed += shortSide) {
+		for(var spaceUsed = 0; spaceUsed <= longSide; spaceUsed += shortSide) {
+			console.log(index, spaceUsed, longSide, keys[index]);
 			var el_image = $("<img/>")
 				.addClass("cpa_custom_img")
 				.attr("src", keys[index]);
 
 			if(wideBanner) {
 				$(el_image).css({
-					position: 'relative',
+					position: 'absolute',
 					width: imageWidth,
-					left: offset
+					top: 0,
+					left: spaceUsed + offset
 				});
 			} else {
 				$(el_image).css({
-					position: 'relative',
+					position: 'absolute',
 					width: imageWidth,
-					top: offset
+					top: spaceUsed + offset,
+					left: 0
 				});
 			}
 
@@ -313,7 +316,9 @@ var bannerAds = [
 		}
 
 		$('.cpa_banner_vignette', this).remove();
-		var el_bannerVignette = $("<div/>").addClass("cpa_banner_vignette")
+		var el_bannerVignette = $("<div/>")
+			.addClass("cpa_banner_vignette")
+			.css({margin: 0});
 		if(wideBanner){
 			el_bannerVignette.addClass("cpa_banner_landscape");
 		}else{

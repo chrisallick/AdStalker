@@ -24,6 +24,7 @@
 .cpa_custom_p { width: 100%; height: auto; font-family: "srmts"; font-size: 20px; color: #FFFFFF !important; position: absolute; top: 0px; left: 0px; z-index: 101; padding: 10px; box-sizing: border-box; margin: 0; border: none !important;}
 
 .cpa_caption_vignette {
+    margin: 0 !important;
     display: table-cell;
     height: 100%;
 }
