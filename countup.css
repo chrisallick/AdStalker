@@ -6,6 +6,9 @@
 	letter-spacing:-3px;
 }
 
+.mdl-textfield__label:after{
+	background-color:#000000;
+}
 .position{
 	display: inline-block;
 	height: 1.6em;
