@@ -244,15 +244,29 @@ var basicAds = [
 					height: "100%",
 					padding: 0
 				});
-			var el_caption_text = $("<span/>")
-				.text(captionText)
+			var el_caption_vignette = $("<div/>")
 				.addClass("cpa_caption_vignette")
 				.addClass(captionPositionClass)
 				.css({
+					position: 'absolute',
+					width: '100%',
+					height: '100%',
+					left: 0,
+					top: 0
+				});
+			var el_caption_text = $("<span/>")
+				.text(captionText)
+				.addClass("cpa_caption_basic_text")
+				.addClass(captionPositionClass)
+				.css({
+					position: 'relative',
+					width: '100%',
+					height: '100%',
 					padding: 10,
+					left: 0,
 					color: '#fff'
 				});
-			el_caption.append(el_caption_text);
+			el_caption.append(el_caption_vignette).append(el_caption_text);
 
 			$(this).append(el_caption);
 		}
@@ -378,14 +392,18 @@ var bannerAds = [
 			fontSize = Math.round(Math.sqrt(charArea));
 
 			el_background.css({top: offset});
-			el_image.css({
-				top: (wrapperHeight - imageWidth) / 2,
-				left: wrapperWidth * 0.6,
-			});
-			el_caption.css({
-				width: '40%',
-				left: wrapperWidth * 0.1
-			});
+			el_image
+				.addClass("cpa_caption_banner_img")
+				.css({
+					top: (wrapperHeight - imageWidth) / 2,
+					left: '60%',
+				});
+			el_caption
+				.addClass("cpa_caption_banner_text")
+				.css({
+					width: '40%',
+					left: '10%'
+				});
 			el_caption_text.css({fontSize: fontSize});
 		}else{
 			var captionWidth = wrapperWidth - 20;
