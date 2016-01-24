@@ -9,54 +9,7 @@
         <script src="countup.js"></script>
         <script src="moment.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <style>
-          html{
-            height: 100px;
-          }
-          textarea:focus, input:focus{
-              outline: none;
-          }
-          .demo-card-wide {
-            width: 400px;
-          }
-          .mdl-card{
-            min-height:100px;
-          }
-          .active-stalker{
-            display:none;
-            padding: 30px;
-          }
-          .cpa_stalkee_user img{
-            margin-right: 10px;
-            margin-left: 20px;
-          }
-
-          .stalker_time{
-            text-align: center;
-          }
-          #countdown{
-            margin: 10px 0px;
-            text-align:center;
-          }
-          .over-it{
-            margin-left: 20px;
-            width: 300px;
-          }
-
-          .mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab{
-            color: #444444;
-            background-color: #FFF64F;
-          }
-          .img-circle {
-            border-radius: 50%;
-            width:50px;
-            height: 50px;
-          }
-          .mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label{
-            color:#444444;
-          }
-        </style>
-
+        <link rel="stylesheet" href="popup.css">
         <script src="popup.js"></script>
     </head>
     <body>
@@ -67,7 +20,7 @@
                 <input class="mdl-textfield__input" type="text" id="cpa_text">
                 <label class="mdl-textfield__label" for="cpa_text">Who do you want to stalk today?</label>
               </div>
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent stalk-now">
                 Stalk
               </button>
             </form>
@@ -75,7 +28,11 @@
 
           <div class="active-stalker">
             <div class="cpa_stalkee_user">
-              <img src="" class="img-circle" />Currently Stalking <a href="http://instagram.com/">@<span id="cpa_stalkee_un"></span></a>
+              <img src="" class="img-circle" />
+              <div>
+                Currently Stalking <br>
+                <a href="http://instagram.com/">@<span id="cpa_stalkee_un"></span></a>
+              </div>
             </div>
             <div class="stalker_time">
               Time saved

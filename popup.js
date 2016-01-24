@@ -1,7 +1,6 @@
 var cid = "77c5d80362e34ae6869148deea59b1e7";
 
 $(document).ready(function(){
-
     $("#cpa_stalkee").submit(function(event){
         event.preventDefault();
         var userData = {};
@@ -12,6 +11,9 @@ $(document).ready(function(){
           $('#cpa_stalkee_un').text(stalkee);
           $('.active-stalker').show();
           $('#countdown').countup();
+          $('html').height('350px');
+          $('body').height('350px');
+          $('.demo-card-wide').height('350px');
             $.get("https://api.instagram.com/v1/users/search?q="+stalkee+"&client_id="+cid, function(response){
                 userData = response.data[0];
                 $('.img-circle').attr('src',userData.profile_picture);
@@ -35,8 +37,10 @@ $(document).ready(function(){
         $('#cpa_stalkee_un').text(result.cpa_stalkee);
         $('.active-stalker').show();
         $('#countdown').countup();
-        // $('#testdate').text(result.cpa_time.format());
         $('.img-circle').attr('src',result.cpa_stalkee_user_data.profile_picture);
+        $('html').height('350px');
+        $('body').height('350px');
+        $('.demo-card-wide').height('350px');
       }
     });
 
@@ -51,6 +55,9 @@ $(document).ready(function(){
         $('#cpa_text').val('');
         $('.active-stalker').hide();
         $('.add-stalker').show();
+        $('html').height('100px');
+        $('body').height('100px');
+        $('.demo-card-wide').height('100px');
       });
     });
 

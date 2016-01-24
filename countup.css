@@ -38,8 +38,8 @@
 		linear,
 		left bottom,
 		left top,
-		color-stop(0.5, #3A3A3A),
-		color-stop(0.5, #444444)
+		color-stop(0.5, #000000),
+		color-stop(0.5, #000000)
 	);
 }
 
