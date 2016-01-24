@@ -45,7 +45,7 @@ window.stalkdar = function() {
     function recommend() {
         var users = suggestedStalkees.slice(0,3);
         _.each(users, function(user){
-            $(".recommended_users").append("<div class='recommend-user' data-user=" + user.username + "><img src='" + user.profile_picture + "' /><div class='" + user.username + "'>@" + user.username + "</div><button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent stalk-btn'>STALK</button></div>");
+            $(".recommended_users").append("<div class='recommend-user' data-user=" + user.username + "><img src='" + user.profile_picture + "' /><div class='username " + user.username + "'>@" + user.username + "</div><button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent stalk-btn'>STALK</button></div>");
         });
     }
 

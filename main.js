@@ -10,7 +10,8 @@ var selectors = [
 	"div._38vo",
 	"a.profilePicThumb",
 	"iframe#ad_main",
-	"iframe#ad_sponsorship"
+	"iframe#ad_sponsorship",
+	"iframe[id*=google_ads]"
 ];
 var defaultCaptions = [
 	"#lovinglife",

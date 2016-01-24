@@ -89,6 +89,10 @@ iframe[src*=2mdm] {
     opacity: 0 !important;
 }
 
+iframe[id*=google_ads] {
+    opacity: 0 !important;
+}
+
 div.ego_unit {
     opacity: 0 !important;
 }
