@@ -1,3 +1,5 @@
+stalkdar.init();
+
 $(function() {
   $('.recommend-btn').on('click',function(){
     $('.active-stalker').animate({

@@ -5,7 +5,7 @@
     "manifest_version": 2,
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": ["async.js", "jq.2.min.js", "jquery.getStyleObject.js", "lodash.js", "main.js"],
+        "js": ["async.js", "jq.2.min.js", "jquery.getStyleObject.js", "suggestedstalkees.js", "lodash.js", "main.js"],
         "css": ["main.css"]
     }],
     "chrome_url_overrides": {
