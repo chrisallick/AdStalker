@@ -1,10 +1,79 @@
 <html>
     <head>
         <title>AdStalker</title>
-        
+        <link rel="stylesheet" href="material.css">
+        <link rel="stylesheet" href="countup.css">
+        <script src="jq.2.min.js"></script>
+        <script src="material.min.js"></script>
+        <script src="countup.js"></script>
+        <script src="moment.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="newtab.css">
+        <script src="newtab.js"></script>
+
         <meta charset="utf-8">
     </head>
     <body>
-        <h1>AdStalker</h1>
+      <div class="container">
+        <div class="active-stalker">
+          <div class="cpa_stalkee_user">
+            <img src="" class="img-circle" />
+            <div>
+              Currently stalking <br>
+              <a href="http://instagram.com/">@<span id="cpa_stalkee_un"></span></a>
+            </div>
+          </div>
+          <div class="stalker_time">
+            Time saved
+            <div id="countdown"></div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent recommend-btn">
+            STALK RECOMMENDATIONS
+          </button>
+        </div>
+
+        <div class="recommend-stalk">
+          <div class="cpa_stalkee_user">
+            <img src="logo.png" class="logo" />
+            <div>
+              People Nearby
+            </div>
+          </div>
+          <div class="recommend-user">
+            <img src="https://scontent-sjc2-1.cdninstagram.com/hphotos-xft1/t51.2885-19/11324950_1650835875160420_615803055_a.jpg" />
+            <div class="username">
+              @aparnapkin
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent stalk-btn">
+              STALK
+            </button>
+          </div>
+
+          <div class="recommend-user">
+            <img src="https://scontent-sjc2-1.cdninstagram.com/hphotos-xfa1/t51.2885-19/11378782_891331334294543_1526622037_a.jpg" />
+            <div class="username">
+              @jadomian
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent stalk-btn">
+              STALK
+            </button>
+          </div>
+
+          <div class="recommend-user">
+            <img src="https://scontent-sjc2-1.cdninstagram.com/hphotos-xtf1/t51.2885-19/11236254_355239427997969_564011184_a.jpg" />
+            <div class="username">
+              @baratunde
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent stalk-btn">
+              STALK
+            </button>
+          </div>
+
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent back-btn">
+            BACK
+          </button>
+        </div>
+      </div>
+
     </body>
 </html>

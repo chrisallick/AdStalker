@@ -1,0 +1,96 @@
+@font-face {
+  font-family: "adblocker";
+  src: url('avenir.otf');
+}
+
+body{
+  background-color: #FFF64F;
+}
+.container {
+  width: 900px;
+  margin: 60px auto;
+  text-align: center;
+}
+.mdl-textfield{
+  width:260px;
+  margin-left: 10px;
+  margin-top: 7px;
+  font-family: "adblocker";
+}
+
+a {
+  color: #0103FF;
+  text-decoration: none;
+}
+
+.cpa_stalkee_user{
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "adblocker";
+  line-height: 1.5em;
+}
+
+.cpa_stalkee_user img{
+    margin-bottom: 25px;
+}
+
+.stalker_time{
+  text-align: center;
+  margin-top: 50px;
+  font-weight: bold;
+  font-family: "adblocker";
+  font-size: 24px;
+}
+#countdown{
+  margin: 40px 0px 20px;
+  text-align:center;
+}
+.mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 13px;
+  font-weight: bold;
+  font-family: "adblocker";
+  letter-spacing: 1px;
+}
+
+.recommend-btn{
+  font-size: 20px;
+padding: 3px 32px 4px;
+}
+
+.recommend-stalk{
+  opacity: 0;
+}
+
+.recommend-user {
+    display: inline-block;
+    margin: 70px 45px;
+}
+
+.recommend-user img {
+    border-radius: 50%;
+    margin-bottom: 20px;
+    width: 200px;
+}
+
+.username {
+    font-size: 24px;
+    font-family: "adblocker";
+    margin-bottom: 20px;
+}
+
+.logo{
+  width: 75px;
+}
+
+.img-circle {
+  border-radius: 50%;
+  width:100px;
+  height: 100px;
+}
+
+.user-image{
+
+}

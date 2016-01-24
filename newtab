@@ -2,9 +2,14 @@
   font-family: "adblocker";
   src: url('avenir.otf');
 }
-html{
-  height: 100px;
-  font-family: "adblocker";
+
+body{
+  background-color: #F9F49D;
+}
+.container {
+  width: 800px;
+  margin: 60px auto;
+  text-align: center;
 }
 .mdl-textfield{
   width:260px;
@@ -20,6 +25,7 @@ textarea:focus, input:focus, a:focus{
 }
 a {
   color: #0103FF;
+  text-decoration: none;
 }
 .demo-card-wide {
   width: 400px;
@@ -28,17 +34,13 @@ a {
 .mdl-card{
   min-height:100px;
 }
-.active-stalker{
-  display:none;
-  padding: 30px 0px;
-  width: 400px;
-  height:200px;
-}
+
 .cpa_stalkee_user{
   text-align: center;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: bold;
   font-family: "adblocker";
+  line-height: 1.5em;
 }
 
 .cpa_stalkee_user img{
@@ -71,14 +73,12 @@ a {
 .over-it{
   margin-left: 124px;
   width: 150px;
-  margin-top: 24px;
 }
-
 
 .img-circle {
   border-radius: 50%;
-  width:50px;
-  height: 50px;
+  width:100px;
+  height: 100px;
 }
 .mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label{
   color:#000000;
