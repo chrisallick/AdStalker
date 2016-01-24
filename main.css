@@ -151,16 +151,16 @@ iframe#ad_sponsorship {
 
 @-webkit-keyframes "pulse2" {
  0% {
-    -ms-transform: scale(.3);
-   transform: scale(.3);
+    -ms-transform: scale(.5);
+   transform: scale(.5);
  }
- 50% {
+ 70% {
    -webkit-transform: scale(1);
    transform: scale(1);
  }
  100% {
-   -webkit-transform: scale(.3);
-   transform: scale(.3);
+   -webkit-transform: scale(.5);
+   transform: scale(.5);
  }
 
 }
