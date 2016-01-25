@@ -223,7 +223,7 @@ var basicAds = [
 		var captionPositionClass = captionPositionClasses[captionIndex];
 		var wideBanner = wrapperWidth > wrapperHeight;
 		var imageWidth = wideBanner ? wrapperWidth : wrapperHeight;
-		var captionText = images[keys[0]].caption;
+		var captionText = _.get(images, [_.get(keys, 0), 'caption']);
 		var el_image = $("<img/>")
 			.addClass("cpa_custom_img_single")
 			.attr("src", keys[0]);
@@ -335,7 +335,7 @@ var bannerAds = [
 		var offset, blur, fontSize;
 		var backgroundWidth = wideBanner ? (wrapperWidth*1.05) : (wrapperHeight*1.05);
 		var imageWidth = wideBanner ? (wrapperWidth*0.3) : (wrapperHeight*0.3);
-		var captionText = images[keys[0]].caption;
+		var captionText = _.get(images, [_.get(keys, 0), 'caption']);
 
 		if(wideBanner){
 			offset = (wrapperHeight - wrapperWidth) / 2;
