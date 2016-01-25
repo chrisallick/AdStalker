@@ -142,8 +142,8 @@ function getInstagram() {
 		var d = data.data;
 		var _id;
 		for( var i = 0; i < d.length; i++ ) {
-			if( d[i].username == username ) {
-				_id = d[i].id;
+			if( _.get(d, [i, 'username']) === username ) {
+				_id = _.get(d, [i, 'id']);
 			}
 		}
 
@@ -223,7 +223,7 @@ var basicAds = [
 		var captionPositionClass = captionPositionClasses[captionIndex];
 		var wideBanner = wrapperWidth > wrapperHeight;
 		var imageWidth = wideBanner ? wrapperWidth : wrapperHeight;
-		var captionText = images[keys[0]].caption;
+		var captionText = _.get(images, [_.get(keys, 0), 'caption']);
 		var el_image = $("<img/>")
 			.addClass("cpa_custom_img_single")
 			.attr("src", keys[0]);
@@ -293,7 +293,7 @@ var bannerAds = [
 			console.log(index, spaceUsed, longSide, keys[index]);
 			var el_image = $("<img/>")
 				.addClass("cpa_custom_img")
-				.attr("src", keys[index]);
+				.attr("src", _.get(keys, index));
 
 			if(wideBanner) {
 				$(el_image).css({
@@ -335,7 +335,7 @@ var bannerAds = [
 		var offset, blur, fontSize;
 		var backgroundWidth = wideBanner ? (wrapperWidth*1.05) : (wrapperHeight*1.05);
 		var imageWidth = wideBanner ? (wrapperWidth*0.3) : (wrapperHeight*0.3);
-		var captionText = images[keys[0]].caption;
+		var captionText = _.get(images, [_.get(keys, 0), 'caption']);
 
 		if(wideBanner){
 			offset = (wrapperHeight - wrapperWidth) / 2;
@@ -442,7 +442,6 @@ $(window).load(function(){
     chrome.storage.local.get('cpa_stalkee', function (result) {
         if( result && result.cpa_stalkee ) {
         	username = result.cpa_stalkee;
-        	debugger;
         	stalkabase.init(result.cpa_stalkee.id);
         }
     });
