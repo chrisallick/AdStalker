@@ -1,7 +1,11 @@
 
 
 stalkdar.init(function() {
-  $('.recommend-btn').fadeIn();
+  $('.recommend-btn').html("STALK RECOMMENDATIONS")
+    .css({
+      backgroundColor: "black",
+      color: "white"
+    });
   stalkdar.recommend();
   var cid = "77c5d80362e34ae6869148deea59b1e7";
   $('.recommend-btn').on('click',function(){
