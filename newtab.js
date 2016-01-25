@@ -1,8 +1,9 @@
 
 
-$(function() {
-  var cid = "77c5d80362e34ae6869148deea59b1e7";
+stalkdar.init(function() {
+  $('.recommend-btn').fadeIn();
   stalkdar.recommend();
+  var cid = "77c5d80362e34ae6869148deea59b1e7";
   $('.recommend-btn').on('click',function(){
 
     $('.active-stalker').animate({

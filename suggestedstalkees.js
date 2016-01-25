@@ -16,30 +16,6 @@ window.stalkdar = function() {
          followed_by:15416,
          follows:1214
       }
-    }, {
-        username: "mpallick",
-        bio: "SF native with a love for all things food and wine paired with music, outdoors and adventure.",
-        website: "",
-        profile_picture: "https://scontent.cdninstagram.com/hphotos-xfa1/t51.2885-19/11355837_958743797502399_668773975_a.jpg",
-        full_name: "Mollie Allick",
-        counts: {
-        media: 304,
-        followed_by: 564,
-        follows: 281
-        },
-        id: "1595426"
-    }, {
-        username: "jaminsky",
-        bio: "",
-        website: "",
-        profile_picture: "https://scontent.cdninstagram.com/hphotos-xft1/t51.2885-19/11849031_1630293520551990_321560343_a.jpg",
-        full_name: "Ben Kaminsky",
-        counts: {
-        media: 126,
-        followed_by: 1632,
-        follows: 203
-        },
-        id: "35026200"
     }];
 
     function recommend() {
@@ -49,7 +25,7 @@ window.stalkdar = function() {
         });
     }
 
-    function init() {
+    function init(cb) {
         var locations;
         var usersCount = 0;
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -66,7 +42,7 @@ window.stalkdar = function() {
                 function(cb) {
                     async.parallel([
                         function(cb) {
-                            var data = locations.data;
+                            var data = _.shuffle(locations.data);
                             var location = data[0];
                             var locationId = location.id;
                             $.get("https://api.instagram.com/v1/locations/" + locationId + "/media/recent?client_id=" + cid, function(response) {
@@ -81,8 +57,23 @@ window.stalkdar = function() {
                             });
                         },
                         function(cb) {
-                            var data = locations.data;
+                            var data = _.shuffle(locations.data);
                             var location = data[1];
+                            var locationId = location.id;
+                            $.get("https://api.instagram.com/v1/locations/" + locationId + "/media/recent?client_id=" + cid, function(response) {
+                                var posts = _.shuffle(response.data);
+                                var selectedPosts = _.slice(posts, 0, 3);
+                                _.each(selectedPosts, function(selectedPost) {
+                                    var user = selectedPost.user;
+                                    suggestedStalkees.push(user);
+                                });
+                                usersCount++;
+                                cb(null);
+                            });
+                        },
+                        function(cb) {
+                            var data = _.shuffle(locations.data);
+                            var location = data[2];
                             var locationId = location.id;
                             $.get("https://api.instagram.com/v1/locations/" + locationId + "/media/recent?client_id=" + cid, function(response) {
                                 var posts = _.shuffle(response.data);
@@ -99,6 +90,7 @@ window.stalkdar = function() {
                     );
                 },
                 function(result) {
+                    cb();
                     console.log(suggestedStalkees);
                 }
             ]);
