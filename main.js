@@ -142,8 +142,8 @@ function getInstagram() {
 		var d = data.data;
 		var _id;
 		for( var i = 0; i < d.length; i++ ) {
-			if( d[i].username == username ) {
-				_id = d[i].id;
+			if( _.get(d, [i, 'username']) === username ) {
+				_id = _.get(d, [i, 'id']);
 			}
 		}
 
@@ -293,7 +293,7 @@ var bannerAds = [
 			console.log(index, spaceUsed, longSide, keys[index]);
 			var el_image = $("<img/>")
 				.addClass("cpa_custom_img")
-				.attr("src", keys[index]);
+				.attr("src", _.get(keys, index));
 
 			if(wideBanner) {
 				$(el_image).css({
@@ -442,7 +442,6 @@ $(window).load(function(){
     chrome.storage.local.get('cpa_stalkee', function (result) {
         if( result && result.cpa_stalkee ) {
         	username = result.cpa_stalkee;
-        	debugger;
         	stalkabase.init(result.cpa_stalkee.id);
         }
     });
